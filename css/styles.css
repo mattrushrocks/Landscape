@@ -383,26 +383,22 @@ header p a {
   color: #fff;
 }
 
-/* Ensure nav dropdowns appear above carousel */
+/* Dropdown smoothing (ensure above carousel) */
 #theNav li.parent ul {
+  background-color: #c8e6c9; /* soft green */
+  list-style-type: none;
+  padding: 0;
   position: absolute;
   left: 0;
   top: 100%;
-  min-width: 220px;
-  background-color: #c8e6c9;
-  list-style: none;
-  padding: 0.4rem 0;
-  margin: 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: all 0.25s ease;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
   border-radius: 6px;
-  z-index: 9999; /* 👈 key line */
+  z-index: 9999; /* show above carousel */
 }
-
-
 #theNav li.parent:hover ul {
   opacity: 1;
   visibility: visible;
@@ -444,9 +440,7 @@ div.masks section h2 {
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.2);
   position: relative;
-  z-index: 1; /* keep carousel below dropdowns */
-
-
+  z-index: 1; /* keep carousel below nav dropdowns */
 }
 
 .swiper-wrapper {
@@ -477,7 +471,6 @@ div.masks section h2 {
   bottom: 0;
   left: 0;
   width: 100%;
-  max-height:25%;
   background: rgba(0, 76, 153, 0.8); /* sky blue overlay for contrast */
   color: #fff;
   padding: 6px 10px;
@@ -513,6 +506,18 @@ div.masks section h2 {
   background: rgba(46,125,50,0.7); /* grassy hover */
 }
 
+/* Optional pointer-events overrides with validator-friendly fallbacks */
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  cursor: default;           /* fallback */
+  pointer-events: none;      /* modern */
+}
+.swiper-button-next.swiper-button-hidden,
+.swiper-button-prev.swiper-button-hidden {
+  cursor: default;
+  pointer-events: none;
+}
+
 /* --------------------------- CLIPPED IMAGES --------------------------- */
 .clippath {
   display: grid;
@@ -524,6 +529,13 @@ div.masks section h2 {
 .clippath section img {
   width: 100%;
   height: auto;
+
+  /* Fallbacks for validators/older browsers */
+  border-radius: 50%;
+  overflow: hidden;
+
+  /* Modern clip-path with vendor prefix */
+  -webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);
   transition: transform 1s;
 }
@@ -585,6 +597,7 @@ footer a {
 
 /* --------------------------- MEDIA QUERIES --------------------------- */
 @media only screen and (max-width: 34.9375rem) {
+  /* Mobile: show menu button, hide nav until opened */
   #theBtn {
     border: none;
     background: none;
@@ -619,5 +632,182 @@ footer a {
     padding: 0.75rem 2vw;
     font-size: 14px;
     color: #1a1a1a;
-    text-decoration: none; }
+    text-decoration: none;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: transparent;
   }
+  #theNav li a:hover {
+    background-color: #4CAF50; /* grass hover */
+    color: #fff;
+  }
+  #theNav li.active a {
+    background-color: #2e7d32;
+    color: #fff;
+  }
+
+  .parent > a::after {
+    content: "▼";
+    font-size: 1.1rem;
+    color: rgba(26, 26, 26, 0.5);
+    float: right;
+  }
+  .parent ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #a5d6a7; /* soft green */
+    display: none;
+  }
+  .parent ul li a {
+    color: #fff;
+    padding: 0.65rem 1rem;
+  }
+  .parent:hover ul {
+    display: block;
+  }
+
+  /* Carousel caption bar: slightly smaller on mobile */
+  .swiper-slide h1 {
+    font-size: 1.05rem;
+    padding: 10px 14px;
+  }
+
+  /* Two-up grids collapse naturally; keep masks single column */
+  div.masks {
+    grid-template-columns: 1fr;
+  }
+  .clippath {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (min-width: 35rem) {
+  /* Tablet+: hide menu button, show nav row */
+  #theBtn {
+    display: none;
+  }
+  #theNav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  #theNav li {
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+  #theNav li a {
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  /* Dropdown smoothing (hover) */
+  #theNav li.parent {
+    position: relative;
+  }
+  #theNav li.parent ul {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    min-width: 220px;
+    background-color: #c8e6c9; /* soft green */
+    list-style: none;
+    padding: 0.4rem 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    border-radius: 6px;
+    z-index: 9999;
+  }
+  #theNav li.parent:hover ul {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  #theNav li.parent ul li a {
+    padding: 0.6rem 0.9rem;
+    white-space: nowrap;
+  }
+  #theNav li.parent ul li a:hover {
+    background-color: #66bb6a;
+    color: #fff;
+  }
+
+  /* Clippath layout and polygon shape (with prefix) */
+  .clippath section {
+    display: grid;
+    grid-template-columns: 140px auto;
+    column-gap: 8px;
+    padding: 10px;
+  }
+  .clippath section img {
+    -webkit-clip-path: polygon(
+      20% 0%,
+      80% 0%,
+      100% 20%,
+      100% 80%,
+      80% 100%,
+      20% 100%,
+      0% 80%,
+      0% 20%
+    );
+    clip-path: polygon(
+      20% 0%,
+      80% 0%,
+      100% 20%,
+      100% 80%,
+      80% 100%,
+      20% 100%,
+      0% 80%,
+      0% 20%
+    );
+  }
+
+  /* Masks: two columns */
+  div.masks {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Carousel height can grow a bit on tablet */
+  .swiper {
+    height: 420px;
+  }
+  .swiper-slide h1 {
+    font-size: 1.15rem;
+    padding: 12px 18px;
+  }
+}
+
+@media only screen and (min-width: 64rem) {
+  /* Desktop container max width */
+  header, nav, main {
+    max-width: 960px;
+    margin: auto;
+  }
+
+  /* Nav sizing */
+  #theNav li a {
+    font-size: 1rem;
+  }
+
+  /* Clippath expands */
+  .clippath section {
+    grid-template-columns: 200px auto auto;
+    column-gap: 12px;
+  }
+
+  /* Masks: four columns */
+  div.masks {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  /* Carousel: larger on desktop */
+  .swiper {
+    height: 460px;
+  }
+  .swiper-slide h1 {
+    font-size: 1.2rem;
+    padding: 14px 20px;
+  }
+}
