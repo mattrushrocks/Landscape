@@ -1,0 +1,154 @@
+/* Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.  */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/*  Apply a natural box layout model to all elements  */
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+} // end all elements
+
+
+/* --------------------------- BODY --------------------------- */
+body {
+    font-family: $defaultFont;
+    font-weight: $lightWeight;
+    min-width: 320px;
+}
+
+
+/* --------------------------- HEADER --------------------------- */
+#headerWrapper {border-bottom: 1px solid $greyColor;}
+header {
+    display: grid;
+    grid-template-columns: 50px auto auto 44px;
+    column-gap: $gutter;
+    align-items: center; //vertically
+    padding: .5rem $gutter;
+    span {
+        font-size: 1.6rem;
+        font-weight: $lightWeight;
+        color: $primaryColor;
+    }
+    p{
+        text-align: center;
+        a{
+            text-decoration: none;
+            color: $secondaryColor;
+        }
+    }
+} // end header
+
+
+/* --------------------------- NAVIGATION STUFF GOES HERE --------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------------- MAIN --------------------------- */
+main {
+    h1 {
+        padding: 1rem $gutter.5rem $gutter;
+        font-size: 1.5rem;
+        color: $secondaryColor;
+        font-weight: $lightWeight
+    }
+    p {
+        padding: .5rem $gutter;
+        color: #333;
+        line-height: $leading;
+    }
+}// end main
+.swiper, .swiper img {
+    width: 100%;
+    height: auto;
+  }
+  .hero{
+    position: relative;
+    h1{
+        position: absolute;
+        top: 2%;
+        color: white;
+        right: 2%;
+        background: linear-gradient(90deg, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.20) 39%);
+        padding: 10px;
+        }
+    }
+    .clippath{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        section{
+            padding: 8px;
+            img{
+                width: 100%;
+                height: auto;
+                clip-path: circle(50.0% at 50% 50%);
+                transition: transform 1s;
+                &:hover{
+                    transform: rotate(15deg);
+                }
+            }
+            p{
+                font-style: italic;
+            }
+        }// end section
+    }//end clippath
+div.masks{
+    margin-top: 1rem ;
+    display: grid;
+    gap: 4px;
+    section{
+        position: relative;
+        h2{
+            text-align: center;
+            background-color: $primaryColor;
+            color: #eee;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            padding: .5rem;
+            margin: 0;
+        }
+        img{
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        img:last-child{
+            position: absolute;
+            bottom: 0;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+}
+
+
+
+/* --------------------------- FOOTER --------------------------- */
+#footerWrapper {
+    background-color: $secondaryColor
+} // end footer wrapper
+
+footer {
+    font-size: .85rem;
+    padding: 1rem $gutter;
+    color: #fff;
+    text-align: center;
+    line-height: $leading;
+    a {color: $greyColor;}
+}// end footer
